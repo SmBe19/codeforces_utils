@@ -66,12 +66,12 @@ def init_slide(problem, dest_file):
         f.write(rewriter.dst)
 
 
-def _do_start_slide_watch(dest_file):
-    subprocess.run(['slide', dest_file, 'watch'])
+def _do_start_slide_watch(dest_file, print_fail):
+    subprocess.run(['slide', dest_file, 'watch'] + (['--fail'] if print_fail else []))
 
 
-def start_slide_watch(dest_file):
-    thread = threading.Thread(target=_do_start_slide_watch, args=(dest_file,))
+def start_slide_watch(dest_file, print_fail):
+    thread = threading.Thread(target=_do_start_slide_watch, args=(dest_file, print_fail))
     thread.start()
 
 
@@ -89,6 +89,7 @@ def main():
     parser.add_argument('url', help='URL of Problem')
     parser.add_argument('--destination', '-d', default=os.getcwd(), help='Folder to save files')
     parser.add_argument('--no-watch', '-w', action='store_true', help='Do not watch file')
+    parser.add_argument('--no-fail', '-f', action='store_true', help='Do not print fails')
     parser.add_argument('--no-atom', '-a', action='store_true', help='Do not start atom')
     args = parser.parse_args()
 
@@ -99,7 +100,7 @@ def main():
     if not args.no_atom:
         subprocess.run(['atom', dest_file])
     if not args.no_watch:
-        start_slide_watch(dest_file)
+        start_slide_watch(dest_file, not args.no_fail)
     submit_loop(problem, dest_file)
 
 
