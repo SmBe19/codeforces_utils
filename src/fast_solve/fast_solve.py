@@ -89,12 +89,15 @@ def main():
     parser.add_argument('url', help='URL of Problem')
     parser.add_argument('--destination', '-d', default=os.getcwd(), help='Folder to save files')
     parser.add_argument('--no-watch', '-w', action='store_true', help='Do not watch file')
+    parser.add_argument('--no-atom', '-a', action='store_true', help='Do not start atom')
     args = parser.parse_args()
 
     problem = parse_problem(args.url)
     dest_file = get_dest_file(problem, args.destination)
     init_slide(problem, dest_file)
     print("Ready!")
+    if not args.no_atom:
+        subprocess.run(['atom', dest_file])
     if not args.no_watch:
         start_slide_watch(dest_file)
     submit_loop(problem, dest_file)
