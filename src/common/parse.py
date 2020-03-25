@@ -17,20 +17,18 @@ def _make_nice(element):
     def process_all(join=''):
         return join.join(_make_nice(x) for x in element.contents)
 
-    if element.name == 'div':
+    if element.name in ['div', 'p', 'center', 'pre']:
         return process_all() + '\n'
-    elif element.name == 'p':
-        return process_all() + '\n'
-    elif element.name == 'span':
+    elif element.name == 'span' or element.name == 'i' or element.name=='b':
         return '*{}*'.format(process_all())
     elif element.name == 'ul':
         return process_all('\n')
     elif element.name == 'li':
         return '- ' + process_all()
-    elif element.name == 'center':
-        return process_all() + '\n'
     elif element.name == 'img':
         return '![{}]'.format(element['src'])
+    elif element.name == 'br':
+        return '\n'
     else:
         val = str(element)
         for key, value in replacements.items():
@@ -46,8 +44,8 @@ def parse_samples(element):
     samples = []
     for inp, out in zip(element.find_all(class_='input'), element.find_all(class_='output')):
         samples.append(Sample(
-            str(inp.pre).strip(),
-            str(out.pre).strip(),
+            make_nice(inp.pre).strip(),
+            make_nice(out.pre).strip(),
         ))
     return samples
 
