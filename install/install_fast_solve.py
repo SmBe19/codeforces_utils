@@ -19,7 +19,7 @@ cd {rootdir}
 . venv/bin/activate
 cd src
 python3 -m fast_solve.fast_solve "$@" --destination "$ORIG"
-"""
+""".strip()
 
 parser = argparse.ArgumentParser(description='Install fast_solve')
 parser.add_argument('destination', nargs='?', default='~/.local/bin/cf', help='file to create')
