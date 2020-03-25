@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import argparse
 import os
 import subprocess
@@ -96,6 +94,7 @@ def main():
     problem = parse_problem(args.url)
     dest_file = get_dest_file(problem, args.destination)
     init_slide(problem, dest_file)
+    print("Ready!")
     if not args.no_watch:
         start_slide_watch(dest_file)
     submit_loop(problem, dest_file)

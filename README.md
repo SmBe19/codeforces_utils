@@ -6,3 +6,5 @@ To use this utility to its fullest, you should log into Codeforces and store the
 
 ## Fast Solve
 Install [Slide](https://github.com/SmBe19/slide). Then, run `./fast_solve.py <url>` with the url of the problem you want to solve. This will create a new file, insert the testdata into it and paste the problem description as a comment in the file. Slide will watch the file, recompiling it and checking the testdata automatically. Hit enter to submit the file.
+
+You can also run `./install/install_fast_solve.py` to install the `cf` utility. Note that this will link to the current directory, so you should not move the checkout of this repository afterwards.

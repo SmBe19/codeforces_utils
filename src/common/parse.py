@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from common.problem import Sample, Problem
 
+from common.consts import USER_AGENT
 
 replacements = {
     '$$$': '`',
@@ -45,8 +46,8 @@ def parse_samples(element):
     samples = []
     for inp, out in zip(element.find_all(class_='input'), element.find_all(class_='output')):
         samples.append(Sample(
-            inp.pre.string.strip(),
-            out.pre.string.strip(),
+            str(inp.pre).strip(),
+            str(out.pre).strip(),
         ))
     return samples
 
@@ -56,7 +57,11 @@ def parse_problem(url, debug=False):
         with open('test/problem.html') as f:
             document_text = f.read()
     else:
-        document = requests.get(url)
+        headers = {
+            'origin': 'https://codeforces.com',
+            'user-agent': USER_AGENT,
+        }
+        document = requests.get(url, headers=headers)
         if not document.ok:
             print('Could not download document from', url)
             exit(1)
@@ -84,7 +89,11 @@ def get_contest_problems(url, debug=False):
         with open('test/contest.html') as f:
             document_text = f.read()
     else:
-        document = requests.get(url)
+        headers = {
+            'origin': 'https://codeforces.com',
+            'user-agent': USER_AGENT,
+        }
+        document = requests.get(url, headers=headers)
         if not document.ok:
             print('Could not download document from', url)
             exit(1)

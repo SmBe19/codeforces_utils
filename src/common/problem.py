@@ -2,6 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 import os
 
+from common.consts import USER_AGENT
+
 class Sample:
 
     def __init__(self, input, output):
@@ -46,7 +48,7 @@ class Problem:
         headers = {
             'origin': 'https://codeforces.com',
             'referer': self.url,
-            'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.75 Safari/537.36',
+            'user-agent': USER_AGENT,
         }
         data = {
             'csrf_token': token,
