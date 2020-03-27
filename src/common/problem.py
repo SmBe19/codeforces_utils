@@ -4,6 +4,16 @@ import os
 
 from common.consts import USER_AGENT
 
+def get_cookies():
+    cookies = {}
+    cookie_file = os.environ.get('CF_COOKIE', '~/.codeforces_cookie')
+    with open(os.path.expanduser(cookie_file)) as f:
+        for line in f:
+            split = line.split('=', 2)
+            cookies[split[0].strip()] = split[1].strip()
+    return cookies
+
+
 class Sample:
 
     def __init__(self, input, output):
@@ -35,12 +45,7 @@ class Problem:
         )
 
     def submit(self, file):
-        cookies = {}
-        cookie_file = os.environ.get('CF_COOKIE', '~/.codeforces_cookie')
-        with open(os.path.expanduser(cookie_file)) as f:
-            for line in f:
-                split = line.split('=', 2)
-                cookies[split[0].strip()] = split[1].strip()
+        cookies = get_cookies()
         print("Submit", file)
         document = requests.get(self.url, cookies=cookies)
         soup = BeautifulSoup(document.text, 'html.parser')

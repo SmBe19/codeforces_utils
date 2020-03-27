@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from common.problem import Sample, Problem
 
 from common.consts import USER_AGENT
+from common.problem import get_cookies
 
 replacements = {
     '$$$': '`',
@@ -59,7 +60,8 @@ def parse_problem(url, debug=False):
             'origin': 'https://codeforces.com',
             'user-agent': USER_AGENT,
         }
-        document = requests.get(url, headers=headers)
+        cookies = get_cookies()
+        document = requests.get(url, headers=headers, cookies=cookies)
         if not document.ok:
             print('Could not download document from', url)
             exit(1)

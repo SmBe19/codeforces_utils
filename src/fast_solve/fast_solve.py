@@ -87,6 +87,7 @@ def submit_loop(problem, dest_file):
 def main():
     parser = argparse.ArgumentParser(description="Help to solve a CF problem fast")
     parser.add_argument('url', help='URL of Problem')
+    parser.add_argument('--contin', '-c', help='Continue solving a problem')
     parser.add_argument('--destination', '-d', default=os.getcwd(), help='Folder to save files')
     parser.add_argument('--no-watch', '-w', action='store_true', help='Do not watch file')
     parser.add_argument('--no-fail', '-f', action='store_true', help='Do not print fails')
@@ -94,8 +95,12 @@ def main():
     args = parser.parse_args()
 
     problem = parse_problem(args.url)
-    dest_file = get_dest_file(problem, args.destination)
-    init_slide(problem, dest_file)
+    if not args.contin:
+        dest_file = get_dest_file(problem, args.destination)
+        init_slide(problem, dest_file)
+    else:
+        dest_dir = os.path.abspath(args.destination)
+        dest_file = os.path.join(dest_dir, args.contin)
     print("Ready!")
     if not args.no_atom:
         subprocess.run(['atom', dest_file])
