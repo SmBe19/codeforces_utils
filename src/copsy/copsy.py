@@ -29,6 +29,8 @@ def main():
     with open(os.path.join(destination, 'desc.md'), 'w') as f:
         print("#", problem.name, file=f)
         print(file=f)
+        print(problem.url, file=f)
+        print(file=f)
         print(problem.description, file=f)
         print(file=f)
         print("## Input", file=f)
