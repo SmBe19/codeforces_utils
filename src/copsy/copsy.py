@@ -45,7 +45,7 @@ def main():
         print("  post: (args, data) -> data==args", file=f)
         print("solve(()) -> int:", file=f)
         print("  pre: args -> true", file=f)
-        print("  post: (args, old_data, new_data, result) -> new_data == old_data AND result == old_data[0] + old_data[1]", file=f)
+        print("  post: (args, (a, b), new_data, result) -> new_data == old_data AND result == a + b", file=f)
 
 
 if __name__ == '__main__':
