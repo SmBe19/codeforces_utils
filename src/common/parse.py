@@ -20,8 +20,10 @@ def _make_nice(element):
 
     if element.name in ['div', 'p', 'center', 'pre']:
         return process_all() + '\n'
-    elif element.name == 'span' or element.name == 'i' or element.name=='b':
+    elif element.name == 'span' or element.name == 'i':
         return '*{}*'.format(process_all())
+    elif element.name == 'b':
+        return '**{}**'.format(process_all())
     elif element.name == 'ul':
         return process_all('\n')
     elif element.name == 'li':
@@ -51,7 +53,7 @@ def parse_samples(element):
     return samples
 
 
-def parse_problem(url, debug=False):
+def parse_problem(url, debug=False, use_cookie=True):
     if debug:
         with open('test/problem.html') as f:
             document_text = f.read()
@@ -60,8 +62,11 @@ def parse_problem(url, debug=False):
             'origin': 'https://codeforces.com',
             'user-agent': USER_AGENT,
         }
-        cookies = get_cookies()
-        document = requests.get(url, headers=headers, cookies=cookies)
+        if use_cookie:
+            cookies = get_cookies()
+            document = requests.get(url, headers=headers, cookies=cookies)
+        else:
+            document = requests.get(url, headers=headers)
         if not document.ok:
             print('Could not download document from', url)
             exit(1)
@@ -84,7 +89,7 @@ def parse_problem(url, debug=False):
     )
 
 
-def get_contest_problems(url, debug=False):
+def get_contest_problems(url, debug=False, use_cookie=True):
     if debug:
         with open('test/contest.html') as f:
             document_text = f.read()
@@ -93,7 +98,11 @@ def get_contest_problems(url, debug=False):
             'origin': 'https://codeforces.com',
             'user-agent': USER_AGENT,
         }
-        document = requests.get(url, headers=headers)
+        if use_cookie:
+            cookies = get_cookies()
+            document = requests.get(url, headers=headers, cookies=cookies)
+        else:
+            document = requests.get(url, headers=headers)
         if not document.ok:
             print('Could not download document from', url)
             exit(1)
