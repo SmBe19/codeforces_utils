@@ -8,6 +8,7 @@ from common.problem import get_cookies
 replacements = {
     '$$$': '`',
     '\\ldots': '...',
+    '\\dots': '...',
     '\\neq': '!=',
     '\\leq': '<=',
     '\\geq': '>=',
