@@ -33,10 +33,10 @@ def main():
         print(file=f)
         print(problem.description, file=f)
         print(file=f)
-        print("## Input", file=f)
+        print("## ", end='', file=f)
         print(problem.input, file=f)
         print(file=f)
-        print("## Output", file=f)
+        print("## ", end='', file=f)
         print(problem.output, file=f)
     with open(os.path.join(destination, 'problem.csy'), 'w') as f:
         print("data: (int, int)", file=f)
