@@ -40,12 +40,12 @@ def main():
         print(problem.output, file=f)
     with open(os.path.join(destination, 'problem.csy'), 'w') as f:
         print("data: (int, int)", file=f)
-        print("init((int, int)):", file=f)
-        print("  pre: args -> true", file=f)
-        print("  post: (args, data) -> data==args", file=f)
-        print("solve(()) -> int:", file=f)
-        print("  pre: args -> true", file=f)
-        print("  post: (args, (a, b), new_data, result) -> new_data == old_data AND result == a + b", file=f)
+        print("init():", file=f)
+        print("  pre: true", file=f)
+        print("  post: () -> true", file=f)
+        print("solve(int, int) -> int:", file=f)
+        print("  pre: true", file=f)
+        print("  post: ((a, b), result, old_data, new_data) -> new_data == old_data && result == a + b", file=f)
 
 
 if __name__ == '__main__':
